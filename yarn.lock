@@ -4123,6 +4123,13 @@ cross-fetch@^3.1.5:
   dependencies:
     node-fetch "^2.6.12"
 
+cross-fetch@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/cross-fetch/-/cross-fetch-4.0.0.tgz"
+  integrity sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==
+  dependencies:
+    node-fetch "^2.6.12"
+
 cross-spawn@^6.0.0, cross-spawn@^6.0.5:
   version "6.0.5"
   resolved "https://registry.npmjs.org/cross-spawn/-/cross-spawn-6.0.5.tgz"
@@ -4851,10 +4858,27 @@ expo-gl@^13.0.1:
   dependencies:
     invariant "^2.2.4"
 
+expo-image-loader@~4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/expo-image-loader/-/expo-image-loader-4.3.0.tgz"
+  integrity sha512-2kqJIO+oYM8J3GbvTUHLqTSpt1dLpOn/X0eB4U4RTuzz/faj8l/TyQELsMBLlGAkweNUuG9LqznbaBz+WuSFEw==
+
+expo-image-picker@~14.3.2:
+  version "14.3.2"
+  resolved "https://registry.npmjs.org/expo-image-picker/-/expo-image-picker-14.3.2.tgz"
+  integrity sha512-xr/YeQMIYheXecWP033F2SPwpBlBR5xVCx7YSfSCTH8Y9pw7Z886agqKGbS9QBVGlzJ5qecJktZ6ASSzeslDVg==
+  dependencies:
+    expo-image-loader "~4.3.0"
+
 expo-keep-awake@~12.3.0:
   version "12.3.0"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-12.3.0.tgz"
   integrity sha512-ujiJg1p9EdCOYS05jh5PtUrfiZnK0yyLy+UewzqrjUqIT8eAGMQbkfOn3C3fHE7AKd5AefSMzJnS3lYZcZYHDw==
+
+expo-linear-gradient@^12.7.2:
+  version "12.7.2"
+  resolved "https://registry.npmjs.org/expo-linear-gradient/-/expo-linear-gradient-12.7.2.tgz"
+  integrity sha512-Wwb2EF18ywgrlTodcXJ6Yt/UEcKitRMdXPNyP/IokmeKh4emoq9DxZJpZdkXm3HUTLlbRpi6/t32jrFVqXB9AQ==
 
 expo-media-library@~15.4.1:
   version "15.4.1"
@@ -4880,6 +4904,11 @@ expo-modules-core@1.5.13:
   dependencies:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
+
+expo-permissions@~14.2.1:
+  version "14.2.1"
+  resolved "https://registry.npmjs.org/expo-permissions/-/expo-permissions-14.2.1.tgz"
+  integrity sha512-jXGnOODtDMFvK7cwo7wIRPcnA7m1bie80gJ5BdL6Vs5kgCU7+RCLOCp3sBw7TKRPIlVMmQDhZA62bGzoBV0hkA==
 
 expo-pwa@0.0.127:
   version "0.0.127"
@@ -6130,7 +6159,7 @@ join-component@^1.1.0:
   resolved "https://registry.npmjs.org/join-component/-/join-component-1.1.0.tgz"
   integrity sha512-bF7vcQxbODoGK1imE2P9GS9aw4zD0Sd+Hni68IMZLj7zRnquH7dXUmMw9hDI5S/Jzt7q+IyTXN0rSg2GI0IKhQ==
 
-jpeg-js@^0.4.3:
+jpeg-js@^0.4.3, jpeg-js@^0.4.4:
   version "0.4.4"
   resolved "https://registry.npmjs.org/jpeg-js/-/jpeg-js-0.4.4.tgz"
   integrity sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==

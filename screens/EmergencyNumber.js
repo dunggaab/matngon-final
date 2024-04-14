@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import { useFonts } from 'expo-font';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
+//FontAwesomeIcon icon="fa-solid fa-arrow-left" 
 
 
 const EmergencyNumber = ({ navigation }) => {
@@ -24,10 +25,11 @@ const EmergencyNumber = ({ navigation }) => {
         <View style={styles.header}>
           {/* Arrow icon to navigate back */}
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <FontAwesomeIcon icon={faArrowAltCircleLeft} color="#fff" size={24} />
+            <FontAwesomeIcon icon={faArrowLeft} color="#fff" size={20} />
           </TouchableOpacity>
           <Text style={styles.headerText}>Emergency Numbers</Text>
         </View>
+      <ScrollView style={styles.scrollView}>
       <View style={styles.emergencyNumberContainer}>
         <Text style={styles.emergencyTitle}>National Emergency Number</Text>
         <Text style={styles.emergencyText}>Hotline: 911</Text>
@@ -84,6 +86,7 @@ const EmergencyNumber = ({ navigation }) => {
           ERUF Cebu hotline is dedicated to providing ambulance services and emergency medical assistance within Cebu. Callers can request ambulances, medical aid, and seek help during medical emergencies.
         </Text>
       </View>
+      </ScrollView>
     </View>
   );
 };
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#fe8302',
     padding: 10,
+    paddingTop: 30,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -104,10 +108,16 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: '700',
     color: '#ffffff',
     textAlign: 'center',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  content: {
+    paddingBottom: 20, // Adjust this value according to your footer height
   },
   emergencyNumberContainer: {
     backgroundColor: '#ffffff',
@@ -117,17 +127,17 @@ const styles = StyleSheet.create({
   },
   emergencyTitle: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 15,
+    fontSize: 19,
     fontWeight: '700',
     color: '#373f46',
-    marginBottom: 5,
+    marginBottom: 2,
   },
   emergencyText: {
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '500',
     color: '#ff6d00',
-    marginBottom: 5,
+    marginBottom: 2,
   },
   emergencyDescription: {
     fontFamily: 'Montserrat-Regular',

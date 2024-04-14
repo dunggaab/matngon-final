@@ -3,23 +3,28 @@ import { StyleSheet, Text, View, TouchableOpacity,ActivityIndicator,ImageBackgro
     SafeAreaView,
     ScrollView, } from "react-native";
 import { useFonts } from 'expo-font';
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons} from "@expo/vector-icons";
 
+import LogOutBottomSheet from "../components/LogoutBottomSheet.js";
 
-
-const renderSettings = (navigation) => {
+const renderSettings = (toggleBottomSheet) => {
     return (
-        <View style={{ position: 'absolute', top: 15, right: 20 }}>
-            <TouchableOpacity
-                onPress={() => navigation.navigate("Settings")}
-            >
-                <Ionicons name="settings" size={25} color="white" />
+        <View style={{ position: 'absolute', top: 60, right: 20 }}>
+            <TouchableOpacity onPress={toggleBottomSheet}>
+                <MaterialCommunityIcons name="logout" size={25} color="white" />
             </TouchableOpacity>
         </View>
     );
 };
 
 export default ({ navigation }) => {
+
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+
+  const toggleBottomSheet = () => {
+      setBottomSheetVisible(!bottomSheetVisible);
+  };
+  
     useLayoutEffect(() => {
         navigation.setOptions({
             headerTitle: () => renderSettings(navigation),
@@ -70,7 +75,7 @@ export default ({ navigation }) => {
           <View style={styles.header}>
           <Text style={styles.subtitle}>matngon</Text>
             <Text style={styles.title}>Welcome!</Text>
-            {renderSettings(navigation)}
+            {renderSettings(toggleBottomSheet)}
           </View>
           <View style={styles.imageContainer}>
             <ImageBackground
@@ -129,9 +134,11 @@ export default ({ navigation }) => {
           </View>
           </TouchableOpacity>
           </View>
+          {bottomSheetVisible && <LogOutBottomSheet setStatus={setBottomSheetVisible} />}
         </View>
 
     );
+    
 };
 
 const styles = StyleSheet.create({

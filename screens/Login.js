@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, Image, View, TextInput, TouchableOpacity } from "react-native";
 import Button from "../components/Button";
-import LabeledInput from "../components/LabeledInputs";
 import Colors from "../constants/Colors";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { useFonts } from 'expo-font';
@@ -45,18 +44,12 @@ const createAccount = (email, password) => {
 export default () => {
 
     const [isCreateMode, setCreateMode] = useState(false);
-    const [emailField, setEmailField] = useState({
-        text: "",
-        errorMessage: "",
-    });
-    const [passwordField, setPasswordField] = useState({
-        text: "",
-        errorMessage: "",
-    });
-    const [passwordReentryField, setPasswordReentryField] = useState({
-        text: "",
-        errorMessage: "",
-    });
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordReentry, setPasswordReentry] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [passwordReentryError, setPasswordReentryError] = useState("");
 
     const [loaded] = useFonts({
         'Righteous-Regular': require('../assets/fonts/Righteous-Regular.ttf'),
@@ -80,56 +73,45 @@ export default () => {
                 <Text style={styles.header}>matngon</Text>
             </View>
             <View style={{ flex: 1,paddingTop:20,paddingLeft: 20  }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ededed', width: '95%', borderRadius: 10, height: 60, paddingLeft: 20 }}>
+                <View style={styles.inputContainer}>
                     <Icon name="envelope-o" size={22} color="#818181" />
                     <TextInput
-                        label="Email"
-                        text={emailField.text}
-                        onChangeText={(text) => {
-                            setEmailField({ text });
-                        }}
-                        errorMessage={emailField.errorMessage}
                         style={styles.input} 
                         placeholder="Enter Email"
-                        labelStyle={styles.input}
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
                         autoCompleteType="email"
                     />
                 </View>
+                <Text style={styles.errorText}>{emailError}</Text>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ededed', width: '95%', borderRadius: 10, height: 60, paddingLeft: 20, marginTop: 20 }}>
+                <View style={styles.inputContainer}>
                     <Icon name="lock" size={22} color="#818181" />
                     <TextInput
-                        label="Password"
-                        text={passwordField.text}
-                        onChangeText={(text) => {
-                            setPasswordField({ text });
-                        }}
                         style={styles.input} 
                         placeholder="Enter Password"
+                        onChangeText={(text) => setPassword(text)}
+                        value={password}
                         secureTextEntry={true}
-                        errorMessage={passwordField.errorMessage}
-                        labelStyle={styles.input}
                         autoCompleteType="password"
                     />
                 </View>
+                <Text style={styles.errorText}>{passwordError}</Text>
 
                 {isCreateMode && (
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ededed', width: '95%', borderRadius: 10, height: 60, paddingLeft: 20, marginTop: 20 }}>
+                    <View style={styles.inputContainer}>
                         <Icon name="lock" size={22} color="#818181" />
                         <TextInput
-                            label="Re-enter Password"
-                            text={passwordReentryField.text}
-                            onChangeText={(text) => {
-                                setPasswordReentryField({ text });
-                            }}
                             style={styles.input} 
                             placeholder="Re-enter Password"
+                            onChangeText={(text) => setPasswordReentry(text)}
+                            value={passwordReentry}
                             secureTextEntry={true}
-                            errorMessage={passwordReentryField.errorMessage}
-                            labelStyle={styles.label}
                         />
                     </View>
                 )}
+                <Text style={styles.errorText}>{passwordReentryError}</Text>
+
                 <TouchableOpacity
                     onPress={() => {
                         setCreateMode(!isCreateMode);
@@ -153,38 +135,36 @@ export default () => {
 
             <Button
                 onPress={() => {
-                    const isValid = validateFields(
-                        emailField.text,
-                        passwordField.text
-                    );
+                    const isValid = validateFields(email, password);
                     let isAllValid = true;
                     if (!isValid.email) {
-                        emailField.errorMessage = "Please enter a valid email";
-                        setEmailField({ ...emailField });
+                        setEmailError("Please enter a valid email");
                         isAllValid = false;
+                    } else {
+                        setEmailError("");
                     }
 
                     if (!isValid.password) {
-                        passwordField.errorMessage =
-                            "Password must be at least 8 long w/numbers, uppercase, lowercase, and symbol characters";
-                        setPasswordField({ ...passwordField });
+                        setPasswordError("Password must be at least 8 characters long with numbers, uppercase, lowercase, and symbol characters");
                         isAllValid = false;
+                    } else {
+                        setPasswordError("");
                     }
 
                     if (
                         isCreateMode &&
-                        passwordReentryField.text != passwordField.text
+                        passwordReentry !== password
                     ) {
-                        passwordReentryField.errorMessage =
-                            "Passwords do not match";
-                        setPasswordReentryField({ ...passwordReentryField });
+                        setPasswordReentryError("Passwords do not match");
                         isAllValid = false;
+                    } else {
+                        setPasswordReentryError("");
                     }
 
                     if (isAllValid) {
                         isCreateMode
-                            ? createAccount(emailField.text, passwordField.text)
-                            : login(emailField.text, passwordField.text);
+                            ? createAccount(email, password)
+                            : login(email, password);
                     }
                 }}
                 buttonStyle={{ backgroundColor: '#FF6D00' }}
@@ -214,17 +194,24 @@ const styles = StyleSheet.create({
         color: "#FFD181", 
         fontFamily: 'Righteous-Regular', // Apply the custom font
     },
-    label: { 
-        fontSize: 16, 
-        fontWeight: "bold", 
-        color: Colors.black,
-        fontFamily: 'Montserrat-Regular', // Apply the custom font
+    inputContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#ededed',
+        width: '95%',
+        borderRadius: 10,
+        height: 60,
+        paddingLeft: 20,
+        marginTop: 20,
     },
-    input:{
-        position:'relative',
-        height:'100%',
-        width:'90%',
-        fontFamily:'Montserrat-Regular',
-        paddingLeft:20,
+    input: {
+        flex: 1,
+        fontFamily: 'Montserrat-Regular',
+        paddingLeft: 20,
+    },
+    errorText: {
+        color: 'red',
+        marginLeft: 20,
     },
 });

@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, ScrollView, ImageBackground, StyleSheet, Animated, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, ImageBackground, StyleSheet, TouchableOpacity } from 'react-native';
 import { useFonts } from 'expo-font';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
-
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const ModuleOne = ({ navigation }) => {
   const [loaded] = useFonts({
@@ -12,42 +11,21 @@ const ModuleOne = ({ navigation }) => {
     'Montserrat-Bold': require('../assets/fonts/Montserrat-Bold.ttf'),
   });
 
-  const [scrollY, setScrollY] = useState(new Animated.Value(0));
-  const windowHeight = Dimensions.get('window').height;
-  const contentHeight = windowHeight * 4; // Adjust this based on your content length
-
-  const [loading, setLoading] = useState(true);
-
-  if (!loaded || loading) {
-    // Font is still loading or content is loading, display a loader
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator size="large" color="#fe8302" />
-      </View>
-    );
+  if (!loaded) {
+    // Fonts are still loading, return null or a loader
+    return null;
   }
-
-  const progress = Animated.divide(scrollY, contentHeight - windowHeight).interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0%', '100%'],
-    extrapolate: 'clamp',
-  });
 
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        scrollEventThrottle={16}
-        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], { useNativeDriver: true })}
-        onContentSizeChange={() => setLoading(false)} // Content is loaded
-      >
         <View style={styles.header}>
           {/* Arrow icon to navigate back */}
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <FontAwesomeIcon icon={faArrowAltCircleLeft} color="#fff" size={24} />
+            <FontAwesomeIcon icon={faArrowLeft} color="#fff" size={24} />
           </TouchableOpacity>
           <Text style={styles.headerText}>First Aid 101</Text>
         </View>
+        <ScrollView style={styles.scrollView}>
         <ImageBackground
           style={styles.headerImage}
           source={require('../assets/images/aid.png')}
@@ -108,7 +86,6 @@ const ModuleOne = ({ navigation }) => {
           maintain your skills and readiness to help others in times of crisis.
         </Text>
       </ScrollView>
-      <Animated.View style={[styles.progressBar, { width: progress }]} />
     </View>
   );
 };
@@ -127,6 +104,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#fe8302',
     padding: 10,
+    paddingTop: 30,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -144,15 +122,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 200,
-    // Replace the path with your image source
-    //background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(255, 109, 0, 0.20) 75.5%), url(<path-to-image>) lightgray 50% / cover no-repeat',
   },
   textTitle: {
     fontFamily: 'Montserrat-Bold',
-    fontSize: 15,
+    fontSize: 19,
     fontWeight: '700',
     color: '#fe8302',
-    marginTop: 10,
+    marginTop: 15,
     marginLeft: 20,
     marginRight: 20,
   },
@@ -163,14 +139,10 @@ const styles = StyleSheet.create({
     color: '#373f46',
     marginLeft: 20,
     marginRight: 20,
-    marginBottom: 20,
-  },
-  progressBar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    height: 2,
-    backgroundColor: '#fe8302', // Change the color of the progress bar
+    marginBottom: 5,
+    marginTop: 3,
+    backgroundColor: '#ffffff',
+    borderRadius: 7,
+    padding: 10
   },
 });
-
