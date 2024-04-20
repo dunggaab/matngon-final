@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView, Linking} from 'react-native';
 import { useFonts } from 'expo-font';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-
-//FontAwesomeIcon icon="fa-solid fa-arrow-left" 
-
 
 const EmergencyNumber = ({ navigation }) => {
 
@@ -20,6 +17,11 @@ const EmergencyNumber = ({ navigation }) => {
       return null;
   }
 
+  // Function to handle speed dial
+  const handleSpeedDial = (number) => {
+    Linking.openURL(`tel:${number}`);
+  };
+
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -30,62 +32,13 @@ const EmergencyNumber = ({ navigation }) => {
           <Text style={styles.headerText}>Emergency Numbers</Text>
         </View>
       <ScrollView style={styles.scrollView}>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>National Emergency Number</Text>
-        <Text style={styles.emergencyText}>Hotline: 911</Text>
-        <Text style={styles.emergencyDescription}>
-          This number is used for emergency situations such as medical emergencies, accidents, fires, and other urgent incidents requiring immediate assistance from police, fire department, or medical services.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>Philippine National Police</Text>
-        <Text style={styles.emergencyText}>Hotline: 117</Text>
-        <Text style={styles.emergencyDescription}>
-          This hotline connects callers to the Philippine National Police for reporting crimes, seeking assistance during emergencies, and contacting law enforcement agencies for immediate help.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>Bureau of Fire Protection</Text>
-        <Text style={styles.emergencyText}>Hotline: 117 or (02) 8426-0219</Text>
-        <Text style={styles.emergencyDescription}>
-          The BFP hotline is used to report fires, request assistance during fire-related emergencies, and seek help from the Bureau of Fire Protection for fire suppression and rescue operations.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>Philippine Red Cross Hotline</Text>
-        <Text style={styles.emergencyText}>Hotline: (02) 8790-2300 or (02) 8790-2301</Text>
-        <Text style={styles.emergencyDescription}>
-          These hotlines are operated by the Philippine Red Cross and are utilized for medical emergencies and disaster response. Callers can request ambulance services, medical assistance, and seek help during disasters.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>National Disaster Risk Reduction and Management Council</Text>
-        <Text style={styles.emergencyText}>Hotline: (02) 8911-1406 to 24</Text>
-        <Text style={styles.emergencyDescription}>
-          The NDRRMC hotline is dedicated to handling disaster-related emergencies. It provides assistance, coordination, and support during natural calamities, emergencies, and disaster situations across the Philippines.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>Cebu City Traffic Operations Management((032) 253-9211)</Text>
-        <Text style={styles.emergencyText}>Hotline: (032) 253-9211</Text>
-        <Text style={styles.emergencyDescription}>
-          CITOM hotline is specific to traffic-related emergencies within Cebu City. It allows residents to report traffic accidents, road obstructions, and seek assistance for traffic-related issues.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>Cebu Provincial Police Office((032) 255-7646)</Text>
-        <Text style={styles.emergencyText}>Hotline: (032) 255-7646</Text>
-        <Text style={styles.emergencyDescription}>
-          This hotline connects callers to the Cebu Provincial Police Office. It is used for reporting crimes, seeking assistance during emergencies, and contacting local law enforcement authorities within the province of Cebu.
-        </Text>
-      </View>
-      <View style={styles.emergencyNumberContainer}>
-        <Text style={styles.emergencyTitle}>Emergency Rescue Unit Foundation</Text>
-        <Text style={styles.emergencyText}>Hotline: (032) 232-2765 or 161</Text>
-        <Text style={styles.emergencyDescription}>
-          ERUF Cebu hotline is dedicated to providing ambulance services and emergency medical assistance within Cebu. Callers can request ambulances, medical aid, and seek help during medical emergencies.
-        </Text>
-      </View>
+      {emergencyNumbers.map((emergency, index) => (
+        <TouchableOpacity key={index} onPress={() => handleSpeedDial(emergency.number)} style={styles.emergencyNumberContainer}>
+          <Text style={styles.emergencyTitle}>{emergency.title}</Text>
+          <Text style={styles.emergencyText}>Hotline: {emergency.number}</Text>
+          <Text style={styles.emergencyDescription}>{emergency.description}</Text>
+        </TouchableOpacity>
+      ))}
       </ScrollView>
     </View>
   );
@@ -146,5 +99,49 @@ const styles = StyleSheet.create({
     color: '#373f46',
   },
 });
+
+// Define your emergency numbers here
+const emergencyNumbers = [
+  {
+    title: "National Emergency Number",
+    number: "911",
+    description: "This number is used for emergency situations such as medical emergencies, accidents, fires, and other urgent incidents requiring immediate assistance from police, fire department, or medical services."
+  },
+  {
+    title: "Philippine National Police",
+    number: "117",
+    description: "This hotline connects callers to the Philippine National Police for reporting crimes, seeking assistance during emergencies, and contacting law enforcement agencies for immediate help."
+  },
+  {
+    title: "Bureau of Fire Protection",
+    number: "(02) 8426-0219",
+    description: "The BFP hotline is used to report fires, request assistance during fire-related emergencies, and seek help from the Bureau of Fire Protection for fire suppression and rescue operations."
+  },
+  {
+    title: "Philippine Red Cross Hotline",
+    number: "(02) 8790-2300",
+    description: "These hotlines are operated by the Philippine Red Cross and are utilized for medical emergencies and disaster response. Callers can request ambulance services, medical assistance, and seek help during disasters."
+  },
+  {
+    title: "National Disaster Risk Reduction and Management Council",
+    number: "(02) 8911-1406",
+    description: "The NDRRMC hotline is dedicated to handling disaster-related emergencies. It provides assistance, coordination, and support during natural calamities, emergencies, and disaster situations across the Philippines."
+  },
+  {
+    title: "Cebu City Traffic Operations Management",
+    number: "(032) 253-9211",
+    description: "CITOM hotline is specific to traffic-related emergencies within Cebu City. It allows residents to report traffic accidents, road obstructions, and seek assistance for traffic-related issues."
+  },
+  {
+    title: "Cebu Provincial Police Office",
+    number: "(032) 255-7646",
+    description: "This hotline connects callers to the Cebu Provincial Police Office. It is used for reporting crimes, seeking assistance during emergencies, and contacting local law enforcement authorities within the province of Cebu."
+  },
+  {
+    title: "Emergency Rescue Unit Foundation",
+    number: "161",
+    description: "ERUF Cebu hotline is dedicated to providing ambulance services and emergency medical assistance within Cebu. Callers can request ambulances, medical aid, and seek help during medical emergencies."
+  },
+];
 
 export default EmergencyNumber;
