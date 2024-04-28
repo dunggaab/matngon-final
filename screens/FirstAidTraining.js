@@ -61,7 +61,7 @@ const FirstAidTraining = ({ navigation }) => {
               
               <ImageBackground
                 style={styles.image}
-                source={require('../assets/images/aid.png')}
+                source={require('../assets/images/aid.jpg')}
                 resizeMode='cover'
               >
               </ImageBackground>
